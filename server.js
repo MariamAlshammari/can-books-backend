@@ -15,12 +15,13 @@ mongoose.connect('mongodb://localhost:27017/books', { useNewUrlParser: true, use
 const booksSchema = new mongoose.Schema({
     name:String,
     description:String,
-    status:String
+    status:String,
+    img:String
 
 });
 
 const UserSchema = new mongoose.Schema({
-    name:String,
+    // name:String,
     books:[booksSchema],
     email:String
 
@@ -36,7 +37,7 @@ function seadOwnerCollection(){
       ]})
       mariam.save();
 }
-seadOwnerCollection();
+// seadOwnerCollection();
 
 
 
@@ -47,7 +48,37 @@ app.get('/', homePageHandler);
 function homePageHandler(req, res) {
     res.send('all good')
 }
-// http://localhost:3005/books?userEmail=mariam
+
+
+
+// localhost:3005/addCat?catName=fluffy&catBreed=baldi&ownerName=razan
+app.post('/addBook',addBookHandler);
+
+// localhost:3005/deleteCat/1?ownerName=razan
+// app.delete('/deleteBook/:bookId',deleteBookHandler)
+
+
+function addBookHandler(req,res) {
+    console.log(req.body)
+    
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// http://localhost:3005/books?userEmail=malshammari37@gmail.com
 app.get('/books', booksHandler);
 
 function booksHandler(req, res) {
