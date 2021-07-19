@@ -10,6 +10,7 @@ app.use(cors());
 
 app.use(express.json())
 
+
 const PORT = process.env.PORT;
 mongoose.connect('mongodb://localhost:27017/books', { useNewUrlParser: true, useUnifiedTopology: true });
 
@@ -23,8 +24,10 @@ const booksSchema = new mongoose.Schema({
 
 const UserSchema = new mongoose.Schema({
     // name:String,
+
     email:String,
     books:[booksSchema]
+
 
 });
 
@@ -134,6 +137,7 @@ function deleteBookHandler(req,res) {
     
         })
     }
+
 
 
 
