@@ -23,12 +23,12 @@
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
 
 
-## Name of feature: ________________________________
+## Name of feature: 1. Set up your repositories and Authentication 2. Storage and show book component 3.Add and Delete book 4. Update book________________________________
 
-## Estimate of time needed to complete: _____
+## Estimate of time needed to complete: _____ two hour for every feature
 
-## Start time: _____
+## Start time: diffetent time usually from 6 _____
 
-## Finish time: _____
+## Finish time:diffetent time usually to 7 _____
 
-## Actual time needed to complete: _____
+## Actual time needed to complete: 1 Hour_____
