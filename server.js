@@ -8,6 +8,7 @@ require('dotenv').config();
 const app = express();
 app.use(cors());
 
+// app.use(express.json())
 
 const PORT = process.env.PORT;
 mongoose.connect('mongodb://localhost:27017/books', { useNewUrlParser: true, useUnifiedTopology: true });
@@ -37,7 +38,7 @@ function seadOwnerCollection(){
       ]})
       mariam.save();
 }
-// seadOwnerCollection();
+seadOwnerCollection();
 
 
 
@@ -48,34 +49,6 @@ app.get('/', homePageHandler);
 function homePageHandler(req, res) {
     res.send('all good')
 }
-
-
-
-// localhost:3005/addCat?catName=fluffy&catBreed=baldi&ownerName=razan
-app.post('/addBook',addBookHandler);
-
-// localhost:3005/deleteCat/1?ownerName=razan
-// app.delete('/deleteBook/:bookId',deleteBookHandler)
-
-
-function addBookHandler(req,res) {
-    console.log(req.body)
-    
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // http://localhost:3005/books?userEmail=malshammari37@gmail.com
@@ -95,6 +68,57 @@ userModel.find(
 })
 
 }
+
+// http://localhost:3005/addBook?name=book1&description=about1&status=readed&userEmail=malshammari37@gmail.com
+// app.post('/addBook',addBookHandler);
+
+// localhost:3005/deleteCat/1?ownerName=razan
+// app.delete('/deleteBook/:bookId',deleteBookHandler)
+
+
+// function addBookHandler(req,res) {
+//     console.log(req.body)
+//     let {name,status,description,img,Email}= req.body
+//     userModel.find({ email: Email},(error,bookData) => {
+//         if (error) {
+//             res.send(error, 'wrong user')
+//         }
+//         else {
+//             console.log(bookData[0].books)
+//             bookData[0].books.push({
+//                 name: name,
+//                 description: description,
+//                 status: status,
+//                 img: img
+
+
+
+
+//             })
+//             console.log('after adding', bookData[0])
+//             bookData[0].save()
+//             res.send(bookData[0].books)
+
+//         }
+//     })
+    
+
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 app.listen(PORT, () => {
     console.log(`Listening on PORT ${PORT}`)
