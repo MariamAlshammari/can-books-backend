@@ -2,13 +2,14 @@
 
 const express = require('express');
 const cors = require('cors');
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 require('dotenv').config();
 
 const app = express();
 app.use(cors());
 
-// app.use(express.json())
+app.use(express.json())
+
 
 const PORT = process.env.PORT;
 mongoose.connect('mongodb://localhost:27017/books', { useNewUrlParser: true, useUnifiedTopology: true });
@@ -23,8 +24,10 @@ const booksSchema = new mongoose.Schema({
 
 const UserSchema = new mongoose.Schema({
     // name:String,
-    books:[booksSchema],
-    email:String
+
+    email:String,
+    books:[booksSchema]
+
 
 });
 
@@ -38,6 +41,7 @@ function seadOwnerCollection(){
       ]})
       mariam.save();
 }
+
 seadOwnerCollection();
 
 
@@ -70,52 +74,69 @@ userModel.find(
 }
 
 // http://localhost:3005/addBook?name=book1&description=about1&status=readed&userEmail=malshammari37@gmail.com
-// app.post('/addBook',addBookHandler);
+app.post('/addBook',addBookHandler);
 
-// localhost:3005/deleteCat/1?ownerName=razan
-// app.delete('/deleteBook/:bookId',deleteBookHandler)
-
-
-// function addBookHandler(req,res) {
-//     console.log(req.body)
-//     let {name,status,description,img,Email}= req.body
-//     userModel.find({ email: Email},(error,bookData) => {
-//         if (error) {
-//             res.send(error, 'wrong user')
-//         }
-//         else {
-//             console.log(bookData[0].books)
-//             bookData[0].books.push({
-//                 name: name,
-//                 description: description,
-//                 status: status,
-//                 img: img
+// localhost:3005/books/1?userEmail=malshammari37@gmail.com
+app.delete('/books/:bookId',deleteBookHandler)
 
 
+function addBookHandler(req,res) {
+    console.log(req.body)
+    let {name,status,description,img,Email}= req.body
+    console.log(Email);
+
+    userModel.find({ email: Email},(error,booksData) => {
+        if (error) {
+            res.send(error,'wrong user')
+        }
+        else {
+            console.log('befor',booksData[0])
+            booksData[0].books.push({
+                name: name,
+                description: description,
+                status: status,
+                img: img
 
 
-//             })
-//             console.log('after adding', bookData[0])
-//             bookData[0].save()
-//             res.send(bookData[0].books)
 
-//         }
-//     })
+
+            })
+            console.log('after adding', booksData[0])
+            booksData[0].save()
+            res.send(booksData[0].books)
+
+        }
+    })
     
 
-// }
-
-
-
-
-
-
-
-
-
-
-
-
+}
+function deleteBookHandler(req,res) {
+    
+        console.log(req.params)
+        console.log(req.query)
+    
+        let bookId=Number(req.params.bookId)
+        console.log(bookId);
+        let userEmail=req.query.userEmail
+        console.log(userEmail)
+        userModel.find({email:userEmail},(error,booksData)=>{
+    
+            if(error){res.send(error,'not delete')}
+            else{
+            let newBookArr=booksData[0].books.filter((item,idx)=>{
+                // return idx !==bookId
+                if(idx !== bookId) 
+                return item
+    
+            })
+            booksData[0].books=newBookArr
+            console.log('data after del',booksData[0].books)
+            booksData[0].save()
+            res.send(booksData[0].books)
+        }
+    
+        })
+    }
 
 
 
